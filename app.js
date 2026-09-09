@@ -74,7 +74,8 @@ function header(){let t=$("#title"),s=$("#subtitle"),b=$("#badge");if(st.view===
  $("#message").placeholder = st.view==="notice"
    ? (teacher() ? "공지사항을 입력하세요" : "공지사항은 담임 선생님만 작성할 수 있습니다")
    : "메시지를 입력하세요";
- $("#messageForm button[type=\"submit\"]").disabled = st.view==="notice"&&!teacher();
+ const sendBtn = $("#messageForm button");
+ if(sendBtn) sendBtn.disabled = st.view==="notice"&&!teacher();
 }
 async function load(){
  const f=filter();let q=S.from("messages").select("*").eq("room_type",f.type).order("created_at").limit(300);if(f.type==="dm")q=q.eq("student_id",f.student_id);
