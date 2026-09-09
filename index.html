@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>3반 TALK</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<section id="authView" class="auth-shell">
+  <div class="auth-card">
+    <div class="logo">3</div><h1>3반 TALK</h1><p class="muted">우리 반 교실 메신저</p>
+    <div class="tabs"><button id="loginTab" class="tab active">로그인</button><button id="signupTab" class="tab">학생 회원가입</button></div>
+
+    <form id="loginForm">
+      <label>아이디<input id="loginId" required autocomplete="username" placeholder="내가 정한 아이디"></label>
+      <label>비밀번호<input id="loginPw" required type="password" autocomplete="current-password"></label>
+      <button class="primary">로그인</button><div id="loginError" class="error"></div>
+    </form>
+
+    <form id="signupForm" class="hidden">
+      <div class="grid2">
+        <label>학번<input id="studentNo" required placeholder="예: 30301"></label>
+        <label>이름<input id="studentName" required placeholder="예: 김민희"></label>
+      </div>
+      <label>아이디<input id="signupId" required minlength="4" maxlength="20" pattern="[A-Za-z0-9_]+" placeholder="영문/숫자/_ 4~20자"></label>
+      <label>비밀번호<input id="signupPw" required type="password" minlength="8" placeholder="8자 이상"></label>
+      <label>비밀번호 확인<input id="signupPw2" required type="password"></label>
+      <label>3반 가입코드<input id="classCode" required type="password" autocomplete="off" placeholder="선생님에게 받은 가입코드"></label>
+      <button class="primary">가입하기</button>
+      <p class="help">명렬표의 학번·이름과 일치해야 하며, 한 학생은 한 번만 가입할 수 있습니다.</p>
+      <div id="signupError" class="error"></div>
+    </form>
+  </div>
+</section>
+
+<main id="appView" class="app hidden">
+<aside>
+ <div class="brand"><div class="logo mini">3</div><div><b>3반 TALK</b><small>교실 메신저</small></div></div>
+ <nav><button class="nav active" data-view="class">💬 전체 채팅</button><button class="nav" data-view="dm">🔒 <span id="dmText">선생님과 1:1</span></button><button class="nav" data-view="notice">📌 공지사항</button></nav>
+ <section id="studentPanel" class="hidden"><h4>1:1 상담 학생</h4><div id="students"></div></section>
+ <footer><div><b id="me"></b><small id="role"></small></div><button id="logout">로그아웃</button></footer>
+</aside>
+<section class="chat">
+ <header><div><h2 id="title"></h2><p id="subtitle"></p></div><span id="badge"></span></header>
+ <div id="messages"></div>
+ <form id="messageForm"><textarea id="message" maxlength="2000" rows="1" placeholder="메시지를 입력하세요"></textarea><button>전송</button></form>
+</section>
+</main>
+<script src="config.js"></script><script type="module" src="app.js"></script>
+</body></html>
