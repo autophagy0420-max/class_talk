@@ -1,6 +1,6 @@
 import {createClient} from "https://esm.sh/@supabase/supabase-js@2";
 const C=window.APP_CONFIG,S=createClient(C.SUPABASE_URL,C.SUPABASE_PUBLISHABLE_KEY),$=s=>document.querySelector(s);
-const st={user:null,p:null,map:{},view:"class",student:null,ch:null};
+const st={user:null,p:null,map:{},view:"dm",student:null,ch:null};
 const email=id=>id.trim().toLowerCase()==="teacher" ? "autophagy0420@gmail.com" : `${id.trim().toLowerCase()}@classroom.local`;
 const esc=s=>(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const links=s=>esc(s).replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>').replace(/\n/g,"<br>");
@@ -69,8 +69,8 @@ async function profiles(){
  if(teacher()){const a=data.filter(x=>x.role==="student");$("#studentPanel").classList.remove("hidden");$("#students").innerHTML=a.map(x=>`<button class="student" data-id="${x.id}">${esc(x.student_no)} ${esc(x.display_name)}</button>`).join("");if(a[0])st.student=a[0].id;
  $("#students").onclick=e=>{let b=e.target.closest("[data-id]");if(!b)return;st.student=b.dataset.id;st.view="dm";document.querySelectorAll(".student").forEach(x=>x.classList.toggle("active",x===b));document.querySelectorAll(".nav").forEach(x=>x.classList.toggle("active",x.dataset.view==="dm"));openRoom()}}
 }
-function filter(){if(st.view==="class")return{type:"class"};if(st.view==="notice")return{type:"notice"};return{type:"dm",student_id:teacher()?st.student:st.user.id}}
-function header(){let t=$("#title"),s=$("#subtitle"),b=$("#badge");if(st.view==="class"){t.textContent=C.CLASS_NAME+" 전체 채팅";s.textContent="우리 반 모두가 보는 공간입니다.";b.textContent="전체 공개"}else if(st.view==="notice"){t.textContent="공지사항";s.textContent="담임 선생님이 작성하는 공지입니다.";b.textContent="전체 공개"}else{t.textContent=(teacher()?(st.map[st.student]?.display_name||"학생"):"담임 선생님")+" · 1:1 상담";s.textContent="해당 학생과 담임 선생님만 볼 수 있습니다.";b.textContent="🔒 비공개"}$("#message").disabled=st.view==="notice"&&!teacher();
+function filter(){if(st.view==="notice")return{type:"notice"};return{type:"dm",student_id:teacher()?st.student:st.user.id}}
+function header(){let t=$("#title"),s=$("#subtitle"),b=$("#badge");if(st.view==="notice"){t.textContent="공지사항";s.textContent="담임 선생님이 작성하는 공지입니다.";b.textContent="전체 공개"}else{t.textContent=(teacher()?(st.map[st.student]?.display_name||"학생"):"담임 선생님")+" · 1:1 상담";s.textContent="해당 학생과 담임 선생님만 볼 수 있습니다.";b.textContent="🔒 비공개"}$("#message").disabled=st.view==="notice"&&!teacher();
  $("#message").placeholder = st.view==="notice"
    ? (teacher() ? "공지사항을 입력하세요" : "공지사항은 담임 선생님만 작성할 수 있습니다")
    : "메시지를 입력하세요";
